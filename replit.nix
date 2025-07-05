@@ -1,3 +1,4 @@
+
 { pkgs }: {
   # Specify the Nix packages to make available in the environment
   deps = [
@@ -41,4 +42,3 @@
     # PATH = "${pkgs.python311Full}/bin:${env.PATH}"; # Example, usually not needed to override PATH directly like this
   };
 }
-```
