@@ -34,4 +34,4 @@ HF_HOME = "/tmp/hf_cache"
 # Configure Replit code intelligence (LSP)
 # [languageServer]
 # start = "pylsp" # Example, Replit might use its own or pyright
-```
+
