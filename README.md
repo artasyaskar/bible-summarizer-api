@@ -1,8 +1,9 @@
 # Bible Summarizer API
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+[![Run on Replit](https://replit.com/badge/github/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME)](https://replit.com/github/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME) 
+<!-- TODO: Replace YOUR_GITHUB_USERNAME/YOUR_REPO_NAME with the actual GitHub repo path after it's pushed -->
 
-This API provides endpoints to fetch Bible verses from a specified book and chapter, generate a summary of those verses, and retrieve related archaeological proofs.
+This API provides endpoints to fetch Bible verses from a specified book and chapter, generate a summary of those verses, and retrieve related archaeological proofs. It is configured for deployment on Replit.
 
 ## Features
 
@@ -13,7 +14,7 @@ This API provides endpoints to fetch Bible verses from a specified book and chap
 
 ## API Documentation
 
-Once the application is running, the Swagger UI documentation can be accessed at `/api/docs/`.
+Once the application is running (either locally or on Replit), the Swagger UI documentation can be accessed at `/api/docs/`.
 
 The OpenAPI specification is available at `/static/swagger.yaml`.
 
@@ -73,16 +74,41 @@ Summarizes a Bible chapter and provides archaeological proof.
 
 *   **Backend:** Python, Flask
 *   **Text Summarization:** Hugging Face Transformers (`sshleifer/distilbart-cnn-12-6`)
-*   **WSGI Server (Production):** Gunicorn
+*   **WSGI Server (Production/Replit):** Gunicorn
 *   **API Documentation:** Swagger UI / OpenAPI 3.0
 *   **Testing:** Pytest, Pytest-Mock
-*   **Deployment:** Configured for Render
+*   **Deployment:** Configured for [Replit](https://replit.com/)
 
-## Local Development Setup
+## Development & Deployment on Replit
+
+This project is configured for easy development and deployment on Replit.
+
+1.  **Import to Replit:**
+    *   You can import this project directly from GitHub into Replit. Use the "Run on Replit" badge above (once the GitHub repo URL is updated in the badge) or import manually via Replit's interface.
+    *   Replit will automatically detect the `.replit` and `replit.nix` files to configure the environment.
+
+2.  **Running on Replit:**
+    *   Once imported, click the "Run" button at the top of the Replit interface.
+    *   Replit will install dependencies from `requirements.txt` and then execute the `run` command specified in the `.replit` file (`gunicorn app:app ...`).
+    *   A web view will open showing the live application. The URL will be in the format `https://<repl-name>.<your-replit-username>.repl.co`.
+    *   The API documentation will be available at `https://<repl-name>.<your-replit-username>.repl.co/api/docs/`.
+
+3.  **Dependencies:**
+    *   Python packages are listed in `requirements.txt`. Replit's package manager will install these.
+    *   System-level dependencies are managed by `replit.nix`. The current configuration uses Python 3.11.
+
+4.  **Key Replit Configuration Files:**
+    *   `.replit`: Defines the run command, language, and environment variables.
+        *   **Run command:** `gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120`
+    *   `replit.nix`: Configures the Nix environment, specifying Python version and other system packages if needed.
+
+## Local Development Setup (Optional)
+
+If you wish to develop locally outside of Replit:
 
 ### Prerequisites
 
-*   Python 3.8+ (Python 3.11.5 is used for deployment on Render)
+*   Python 3.11+ (Recommended, to match Replit environment)
 *   `pip` (Python package installer)
 *   Virtual environment tool (e.g., `venv`, `conda`) - Recommended
 
@@ -118,7 +144,7 @@ Summarizes a Bible chapter and provides archaeological proof.
     The API will typically be available at `http://127.0.0.1:5000/`.
     The API documentation will be at `http://127.0.0.1:5000/api/docs/`.
 
-2.  **To run with Gunicorn locally (simulating production):**
+2.  **To run with Gunicorn locally (simulating production/Replit):**
     ```bash
     gunicorn app:app --bind 127.0.0.1:8000
     ```
@@ -135,19 +161,6 @@ Summarizes a Bible chapter and provides archaeological proof.
     ```bash
     pytest -v
     ```
-
-## Deployment
-
-This project is configured for deployment on [Render](https://render.com/).
-
-*   The `render.yaml` file in the root directory defines the service configuration for Render.
-*   Pushing to the connected GitHub branch will trigger a new deployment on Render (if auto-deploy is enabled).
-*   The "Deploy to Render" button at the top of this README can be used for initial deployment.
-
-**Key settings in `render.yaml`:**
-*   **Python Version:** 3.11.5
-*   **Build Command:** `pip install --upgrade pip && pip install -r requirements.txt`
-*   **Start Command:** `gunicorn app:app --timeout 120`
 
 ## Archaeological Data
 
