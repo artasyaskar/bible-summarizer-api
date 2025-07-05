@@ -2,3 +2,8 @@ flask
 requests
 transformers
 torch
+Flask-Swagger-UI
+PyYAML
+pytest
+pytest-mock
+gunicorn
