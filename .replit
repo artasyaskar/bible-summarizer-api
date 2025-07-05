@@ -1,37 +1,7 @@
 language = "python3"
 run = "gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120"
 
-# Environment variables can be set in the Replit UI under "Secrets" or "Environment"
-# but setting some common ones here can be useful.
 [env]
-PYTHONUNBUFFERED = "1" 
-# For Hugging Face models, caching to /tmp might offer some speedup within a session.
-# Cache is ephemeral and will be cleared on repl stop/restart.
+PYTHONUNBUFFERED = "1"
 TRANSFORMERS_CACHE = "/tmp/hf_cache"
 HF_HOME = "/tmp/hf_cache"
-
-# Specifies the entrypoint file for Replit's UI, if different from a common main file.
-# entrypoint = "app.py" # Not strictly necessary if 'run' command is comprehensive
-
-# Tells Replit which files to show by default in the editor.
-# visibleFiles = ["app.py", "README.md", ".replit"]
-
-# Configure modules that Replit's package manager (UPM) should ignore
-# if they are managed by other means (e.g. poetry, or if you want to force pip)
-# [packager]
-# ignoredPackages = []
-
-# Configure Replit's built-in debugger
-# [debugger]
-# support = true
-# workingDir = ""
-# [debugger.interactive]
-# transport = "localhost:0"
-# startCommand = ["prybar-python3", "-q", "-s", "localhost:{port}"]
-# [debugger.interactive.integrated]
-# startCommand = ["prybar-python3", "-q", "-s", "/tmp/prybar_{SID}.sock"]
-
-# Configure Replit code intelligence (LSP)
-# [languageServer]
-# start = "pylsp" # Example, Replit might use its own or pyright
-
