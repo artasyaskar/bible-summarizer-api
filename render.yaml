@@ -35,4 +35,3 @@ services:
 # databases:
 #   - name: mydatabase
 #     plan: free # Example
-```
