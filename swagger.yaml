@@ -1,0 +1,102 @@
+openapi: 3.0.0
+info:
+  title: Bible Summarizer API
+  version: "1.0.0"
+  description: API to get Bible verses, their summaries, and related archaeological proofs.
+  contact:
+    email: support@example.com # Placeholder
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  # Added by Render.com
+  - url: https://{host}/ # Inferred from render.yaml, will be dynamic
+    description: Production server
+  - url: http://localhost:5000 # Assuming default local dev port
+    description: Local development server
+
+paths:
+  /summarize:
+    post:
+      summary: Summarize Bible chapter
+      description: Fetches verses from a specified Bible book and chapter, summarizes them, and provides archaeological proof.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book:
+                  type: string
+                  description: The name of the Bible book (e.g., "Genesis", "John").
+                  example: "John"
+                chapter:
+                  type: string # Changed to string to accommodate ranges like "1-3"
+                  description: The chapter number or chapter range (e.g., "3", "3-5").
+                  example: "3"
+              required:
+                - book
+                - chapter
+      responses:
+        '200':
+          description: Successful response with verses, summary, and proof.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  book:
+                    type: string
+                    description: The reference for the book and chapter (e.g., "John 3").
+                    example: "John 3"
+                  verses:
+                    type: string
+                    description: The full text of the requested Bible verses.
+                    example: "For God so loved the world..."
+                  summary:
+                    type: string
+                    description: A summary of the Bible verses.
+                    example: "God's love for the world is highlighted."
+                  archeological_proof:
+                    type: [string, object, array] # Can be string, list of strings, or dict
+                    description: Archaeological proof(s) related to the passage or book. Could be a single string, a list of findings, or a structured object with more details.
+                    example: "The Pilate Stone confirms the existence of Pontius Pilate."
+        '400':
+          description: Bad Request - Invalid input (e.g., missing parameters, invalid format).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found - Book or chapter not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error - Error during summarization or other server-side issue.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Service Unavailable - Error connecting to external Bible API.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Description of the error.
+      required:
+        - error
+      example:
+        error: "Book and Chapter are required"
